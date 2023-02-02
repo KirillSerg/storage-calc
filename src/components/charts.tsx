@@ -1,112 +1,24 @@
-import React, { useState } from 'react';
-import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis } from 'recharts';
-// import styled from 'styled-components'
+import { Bar, BarChart, ResponsiveContainer, XAxis } from 'recharts';
 
-// const Graph = styled.div`
-//   color: red;
-// `;
+interface CostData {
+  name: string;
+  cost: number;
+}
 
-const App: React.FC = () => {
+interface IconProps {
+  x: number;
+  y: number;
+  payload?: {
+    coordinate: number,
+    index: number,
+    isShow: boolean,
+    offset: number,
+    tickCoord: number,
+    value: string
+  },
+}
 
-  const [storageInput, setStorageInput] = useState('0')
-  const [transferInput, setTransferInput] = useState('0')
-
-  const services = [
-    {
-      id: 1,
-      name: "backblaze",
-      price: {
-        min: 7,
-        max: 5,
-        storage: {
-          hdd: 0.15,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
-        },
-        transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
-        },
-      },
-    },
-    {
-      id: 2,
-      name: "bunny",
-      price: {
-        min: 7,
-        max: 5,
-        storage: {
-          hdd: 0.9,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
-        },
-        transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
-        },
-      },
-    },
-    {
-      id: 3,
-      name: "scaleway",
-      price: {
-        min: 7,
-        max: 5,
-        storage: {
-          hdd: 0.5,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
-        },
-        transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
-        },
-      },
-    },
-    {
-      id: 4,
-      name: "vultr",
-      price: {
-        min: 7,
-        max: 5,
-        storage: {
-          hdd: 0.1,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
-        },
-        transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
-        },
-      },
-    },
-  ]
-
-  interface IconProps {
-    x: number,
-    y: number,
-    payload?: {
-      coordinate: number,
-      index: number,
-      isShow: boolean,
-      offset: number,
-      tickCoord: number,
-      value: string
-    },
-    value?: string
-  }
+const Charts = (data:CostData[]) => {
 
   const Icons = ({ x, y, payload }:IconProps) => {
     // let path = '';
@@ -138,50 +50,15 @@ const App: React.FC = () => {
     )
   }
 
-  const data = services.map(service => {
-    return (
-      {
-        name: service.name,
-        cost: Math.trunc(service.price.storage.hdd * +storageInput),
-      }
-    )
-  })
-  
-
-  return (
-    <>
-      <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center" }}>
-        <div style={{ display: "flex", gap:"5rem"}}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label >{`Storage: ${storageInput}`}</label>
-            <input onChange={(e)=>setStorageInput(e.target.value)} style={{ width: "200px" }} type="range" max={1000} list="storage" />
-            <datalist id="storage" style={{display: "flex", width: "200px", justifyContent: "space-between"}}>
-              <option value="0" label="0"/>
-              <option value="1000" label="1000"/>
-            </datalist>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label >{`Transfer: ${transferInput}`}</label>
-            <input onChange={(e)=>setTransferInput(e.target.value)} style={{ width: "200px" }} type="range" max={1000} list="transfer" />
-            <datalist id="transfer" style={{display: "flex", width: "200px", justifyContent: "space-between"}}>
-              <option value="0" label="0"/>
-              <option value="1000" label="1000"/>
-            </datalist>
-          </div>
-        </div>
-        <div style={{width: "400px", height: "500px", rotate:"90deg"}}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart width={500} height={300} data={data} margin={{top: 20, bottom: 5,}}>
-              <XAxis dataKey="name" tick={Icons} />
-              <Bar barSize={50} dataKey="cost" fill="#8884d8">
-                <LabelList dataKey="cost" position="top" />
-               </Bar> 
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    </>
-  );
+  return(
+    <div style={{width: "400px", height: "500px", rotate:"90deg"}}>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart width={500} height={300} data={data}>
+          <XAxis dataKey="name" tick={Icons} />
+          <Bar barSize={50} dataKey="price" fill="#8884d8"/>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  )
 }
-
-export default App;
+export default Charts
