@@ -23,18 +23,18 @@ const App: React.FC = () => {
       name: "backblaze",
       price: {
         min: 7,
-        max: 5,
+        max: null,
         storage: {
-          hdd: 0.15,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: 0.005,
+          ssd: 0.005,
+          multi: 0.005,
+          singl: 0.005,
         },
         transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: 0.01,
+          ssd: 0.01,
+          multi: 0.01,
+          singl: 0.01,
         },
       },
     },
@@ -42,19 +42,19 @@ const App: React.FC = () => {
       id: 2,
       name: "bunny",
       price: {
-        min: 7,
-        max: 5,
+        min: null,
+        max: 10,
         storage: {
-          hdd: 0.9,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: 0.01,
+          ssd: 0.02,
+          multi: null,
+          singl: null,
         },
         transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: 0.01,
+          ssd: 0.01,
+          multi: null,
+          singl: null,
         },
       },
     },
@@ -62,19 +62,31 @@ const App: React.FC = () => {
       id: 3,
       name: "scaleway",
       price: {
-        min: 7,
-        max: 5,
+        min: null,
+        max: null,
         storage: {
-          hdd: 0.5,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: null,
+          ssd: null,
+          multi: {
+            multiprice: 0.06,
+            bonus: 75,
+          },
+          singl: {
+            singlprice: 0.03,
+            bonus: 75,
+          },
         },
         transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: null,
+          ssd: null,
+          multi: {
+            multiprice: 0.02,
+            bonus: 75,
+          },
+          singl: {
+            singlprice: 0.02,
+            bonus: 75,
+          },
         },
       },
     },
@@ -82,29 +94,46 @@ const App: React.FC = () => {
       id: 4,
       name: "vultr",
       price: {
-        min: 7,
-        max: 5,
+        min: 5,
+        max: null,
         storage: {
-          hdd: 0.1,
-          ssd: 0.2,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: 0.01,
+          ssd: 0.01,
+          multi: {
+            multiprice: 0.01,
+            bonus: null,
+          },
+          singl: {
+            singlprice: 0.01,
+            bonus: null
+          },
         },
         transfer: {
-          hdd: 0.3,
-          ssd: 0.4,
-          multi: 0.4,
-          singl: 0.5,
+          hdd: 0.01,
+          ssd: 0.01,
+          multi: {
+            multiprice: 0.01,
+            bonus: null,
+          },
+          singl: {
+            singlprice: 0.01,
+            bonus: null,
+          },
         },
       },
     },
   ]
 
+  const calculation = (service: any) => {
+    console.log(service)
+    return 1
+  }
+
   const data = services.map(service => {
     return (
       {
         name: service.name,
-        cost: service.price.storage.hdd * +storageInput,
+        cost: calculation(service),
       }
     )
   })
