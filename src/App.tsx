@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Charts from './components/Charts';
+import React, {useState} from 'react';
+import Charts, { CostData } from './components/Charts';
 import Inputs from './components/Inputs';
 import styled from 'styled-components'
 
@@ -14,8 +14,9 @@ const Wrapper = styled.div`
 
 const App: React.FC = () => {
 
-  const [storageInput, setStorageInput] = useState('0')
-  const [transferInput, setTransferInput] = useState('0')
+  const [storageInput, setStorageInput] = useState<string>('')
+  const [transferInput, setTransferInput] = useState<string>('')
+  const [minCoastService, setMinCoastService] = useState<CostData>({name: '', cost: +Infinity})
 
   const services = [
     {
@@ -27,14 +28,26 @@ const App: React.FC = () => {
         storage: {
           hdd: 0.005,
           ssd: 0.005,
-          multi: 0.005,
-          singl: 0.005,
+          multi: {
+            multiprice: 0.005,
+            bonus: null,
+          },
+          singl: {
+            singlprice: 0.005,
+            bonus: null,
+          },
         },
         transfer: {
           hdd: 0.01,
           ssd: 0.01,
-          multi: 0.01,
-          singl: 0.01,
+          multi: {
+            multiprice: 0.01,
+            bonus: null,
+          },
+          singl: {
+            singlprice: 0.01,
+            bonus: null,
+          },
         },
       },
     },
@@ -47,14 +60,26 @@ const App: React.FC = () => {
         storage: {
           hdd: 0.01,
           ssd: 0.02,
-          multi: null,
-          singl: null,
+          multi: {
+            multiprice: null,
+            bonus: null,
+          },
+          singl: {
+            singlprice: null,
+            bonus: null,
+          },
         },
         transfer: {
           hdd: 0.01,
           ssd: 0.01,
-          multi: null,
-          singl: null,
+          multi: {
+            multiprice: null,
+            bonus: null,
+          },
+          singl: {
+            singlprice: null,
+            bonus: null,
+          },
         },
       },
     },
@@ -65,7 +90,7 @@ const App: React.FC = () => {
         min: null,
         max: null,
         storage: {
-          hdd: null,
+          hdd: 0.03, // null
           ssd: null,
           multi: {
             multiprice: 0.06,
@@ -125,11 +150,23 @@ const App: React.FC = () => {
   ]
 
   const calculation = (service: any) => {
-    console.log(service)
-    return 1
+
+    
+
+
+
+    const cost = service.price.storage.hdd * +storageInput;
+    
+    
+    
+    
+    if (cost < minCoastService.cost) {
+      setMinCoastService({ name: service.name, cost: cost })
+    }
+    return cost
   }
 
-  const data = services.map(service => {
+  const costData = services.map((service) => {
     return (
       {
         name: service.name,
@@ -146,8 +183,9 @@ const App: React.FC = () => {
           setStorageInput={setStorageInput}
           transferInput={transferInput}
           setTransferInput={setTransferInput}
+          setMinCoastService={setMinCoastService}
         />
-        <Charts data={data} />
+        <Charts minCoastServiceName={minCoastService.name} costData={costData} />
       </Wrapper>
     </>
   );
