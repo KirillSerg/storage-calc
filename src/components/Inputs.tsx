@@ -1,4 +1,25 @@
+import styled from "styled-components";
 import { CostData } from "./Charts";
+
+const InputWrapper = styled.div`
+  display: flex;
+  gap:5rem;
+  margin-top: 30px;
+`;
+
+const InputCategoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledInput = styled.input`
+  width: 200px;
+`;
+const StyledDatalist = styled.datalist`
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+`;
 
 interface InputsProps {
   storageInput: string;
@@ -22,24 +43,24 @@ const Inputs: React.FC<InputsProps> = ({storageInput, setStorageInput, transferI
 
 
   return (
-    <div style={{ display: "flex", gap:"5rem"}}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+    <InputWrapper>
+      <InputCategoryWrapper>
         <label >{`Storage: ${storageInput}`}</label>
-        <input onChange={handelSetStorageInput} style={{ width: "200px" }} type="range" max={1000} list="storage" />
-        <datalist id="storage" style={{display: "flex", width: "200px", justifyContent: "space-between"}}>
+        <StyledInput onChange={handelSetStorageInput} type="range" max={1000} list="storage" />
+        <StyledDatalist id="storage">
           <option value="0" label="0"/>
           <option value="1000" label="1000"/>
-        </datalist>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+        </StyledDatalist>
+      </InputCategoryWrapper>
+      <InputCategoryWrapper>
         <label >{`Transfer: ${transferInput}`}</label>
-        <input onChange={handelSetTransferInput} style={{ width: "200px" }} type="range" max={1000} list="transfer" />
-        <datalist id="transfer" style={{display: "flex", width: "200px", justifyContent: "space-between"}}>
+        <StyledInput onChange={handelSetTransferInput} type="range" max={1000} list="transfer" />
+        <StyledDatalist id="transfer">
           <option value="0" label="0"/>
           <option value="1000" label="1000"/>
-        </datalist>
-      </div>
-    </div>
+        </StyledDatalist>
+      </InputCategoryWrapper>
+    </InputWrapper>
   )
 }
 

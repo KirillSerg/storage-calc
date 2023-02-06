@@ -1,7 +1,13 @@
 import React from 'react';
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis } from 'recharts';
-import CustomAxisIcons from './CustomAxisIcons';
+import styled from 'styled-components';
+
 import CustomBarLabel from './CustomBarLabel';
+import { colors } from './mockData';
+
+const ChartWrapper = styled.div`
+  height: 400px;
+`;
 
 export interface CostData {
   name: string;
@@ -15,18 +21,13 @@ interface CostDataArray {
 
 const Charts: React.FC<CostDataArray> = ({ costData, minCoastServiceName }) => {
 
-  const colors = {
-    backblaze: "red",
-    bunny: "orange",
-    scaleway: "purple",
-    vultr: "skyblue",
-  }
+  
 
   return(
-    <div style={{width: "400px", height: "500px", rotate:"90deg"}}>
+    <ChartWrapper>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={costData} margin={{top: 55,right: 30,left: 20,bottom: 100}}>
-          <XAxis dataKey="name" tick={CustomAxisIcons} />
+        <BarChart data={costData}>
+          <XAxis tick={false} tickLine={false} />
           <Bar barSize={50} dataKey="cost" label={CustomBarLabel}>
             {costData.map((entry, index) => {
               return <Cell key={index} fill={entry.name === minCoastServiceName ? colors[entry.name as keyof typeof colors] : "lightgrey"} />
@@ -34,7 +35,7 @@ const Charts: React.FC<CostDataArray> = ({ costData, minCoastServiceName }) => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </ChartWrapper>
   )
 }
 export default Charts

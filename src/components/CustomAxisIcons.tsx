@@ -1,52 +1,44 @@
-interface CustomAxisIconsProps {
-  x: number;
-  y: number;
-  payload?: {
-    coordinate: number,
-    index: number,
-    isShow: boolean,
-    offset: number,
-    tickCoord: number,
-    value: string
-  },
-}
+import styled from "styled-components";
+import {services} from "./mockData";
 
-const CustomAxisIcons = ({ x, y, payload }: CustomAxisIconsProps) => {
-  console.log()
-  let path = '';
-  let bgColor = '';
+const XAxisWrap = styled.div`
+  width: 350px;
+  // height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
 
-  switch (payload?.value) {
-    case 'backblaze':
-      path = "M11.5 12.5a3.493 3.493 0 0 1-2.684-1.254 19.92 19.92 0 0 0 1.582 2.907c.231.35-.02.847-.438.847H6.04c-.419 0-.67-.497-.438-.847a19.919 19.919 0 0 0 1.582-2.907 3.5 3.5 0 1 1-2.538-5.743 3.5 3.5 0 1 1 6.708 0A3.5 3.5 0 1 1 11.5 12.5z";
-      bgColor = "red"
-      break;
-    case 'bunny':
-      path = 'M2.45 7.4 7.2 1.067a1 1 0 0 1 1.6 0L13.55 7.4a1 1 0 0 1 0 1.2L8.8 14.933a1 1 0 0 1-1.6 0L2.45 8.6a1 1 0 0 1 0-1.2z';
-      bgColor = "orange"
-      break;
-    case 'scaleway':
-      path = 'M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z';
-      bgColor = "purple"
-      break;
-    case 'vultr':
-      path = 'M7.184 11.246A3.5 3.5 0 0 1 1 9c0-1.602 1.14-2.633 2.66-4.008C4.986 3.792 6.602 2.33 8 0c1.398 2.33 3.014 3.792 4.34 4.992C13.86 6.367 15 7.398 15 9a3.5 3.5 0 0 1-6.184 2.246 19.92 19.92 0 0 0 1.582 2.907c.231.35-.02.847-.438.847H6.04c-.419 0-.67-.497-.438-.847a19.919 19.919 0 0 0 1.582-2.907z';
-      bgColor = "skyblue"
-      break;
-    default:
-      path = 'M7.184 11.246A3.5 3.5 0 0 1 1 9c0-1.602 1.14-2.633 2.66-4.008C4.986 3.792 6.602 2.33 8 0c1.398 2.33 3.014 3.792 4.34 4.992C13.86 6.367 15 7.398 15 9a3.5 3.5 0 0 1-6.184 2.246 19.92 19.92 0 0 0 1.582 2.907c.231.35-.02.847-.438.847H6.04c-.419 0-.67-.497-.438-.847a19.919 19.919 0 0 0 1.582-2.907z';
-      bgColor = "grey"
-  }
+const StyledImg = styled.img`
+  rotate: -90deg;
+`;
+const StyledTickWrap = styled.div`
+  rotate: -90deg;
+`;
+
+// interface CustomAxisIconsProps {
+  
+// }
+
+const CustomAxisIcons = () => {
   
   return (
-    <>
-      <svg x={x-16} y={y} width="32" height="32" fill={bgColor} viewBox="0 0 16 16" >
-          <path d={ path} />
-      </svg>
-      <g transform={`translate(${x},${y})`}>
-        <text transform="rotate(-90)" textAnchor="end" x={-35} y={0} >{ payload?.value}</text>
-      </g>
-    </>
+    <XAxisWrap>
+      {services.map(service => (
+        <div key={service.id} >
+          <StyledImg src={service.icon} width={50} alt="logo" />
+          <StyledTickWrap>
+            <div>{service.name}</div>
+            <div style={{ fontSize: '8px'}}>
+              <input type="checkbox" id="hdd" />
+              <label htmlFor="hdd">HDD</label>
+              <input type="checkbox" id="ssd" />
+              <label htmlFor="ssd">SSD</label>
+            </div>
+          </StyledTickWrap>
+        </div>
+      ))}
+    </XAxisWrap>
   )
 }
 
