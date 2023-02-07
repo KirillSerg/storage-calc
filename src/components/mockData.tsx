@@ -80,7 +80,7 @@ export const services = [
       min: null,
       max: null,
       storage: {
-        hdd: 0.03, // null
+        hdd: null,
         ssd: null,
         multi: {
           multiprice: 0.06,
