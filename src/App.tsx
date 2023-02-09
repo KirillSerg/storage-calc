@@ -22,21 +22,110 @@ const ChartWrapper = styled.div`
 
 const App: React.FC = () => {
 
-  const [storageInput, setStorageInput] = useState<string>('')
-  const [transferInput, setTransferInput] = useState<string>('')
-  const [minCoastService, setMinCoastService] = useState<CostData>({name: '', cost: +Infinity})
+  const [storageInput, setStorageInput] = useState<string>('');
+  const [transferInput, setTransferInput] = useState<string>('');
+  const [minCoastService, setMinCoastService] = useState<CostData>({ name: '', cost: +Infinity });
+  const [currentTarifOptions, setCurrentTarifOptions] = useState<{ hddSsd: string; multiSingl: string }>({ hddSsd: 'hdd', multiSingl: 'multi' });
+  
+  const calculation = (service: any) => { 
+    let cost = 0;
+    let storageCost = 0;
+    let transferCost = 0;
 
-  const calculation = (service: any) => {
+    if ((service.price.storage.multi !== service.price.storage.singl) ||
+      (service.price.transfer.multi !== service.price.transfer.singl)) {
+        const storagePrice = service.price.storage[currentTarifOptions.multiSingl]
+        const transferPrice = service.price.transfer[currentTarifOptions.multiSingl]
+        
+        //bonus storage, free GB
+        if (service.price.storage.bonus && service.price.storage.bonus < +storageInput) {
+          storageCost = storagePrice * (+storageInput - service.price.storage.bonus)
+        } else if (service.price.storage.bonus && service.price.storage.bonus > +storageInput) {
+          storageCost = storagePrice * 0;
+        } else {
+          storageCost = storagePrice * +storageInput
+        }
+        
+        //bonus transfer, free GB
+        if (service.price.transfer.bonus && service.price.transfer.bonus < +transferInput) {
+          transferCost = transferPrice * (+transferInput - service.price.transfer.bonus)
+        } else if (service.price.transfer.bonus && service.price.transfer.bonus > +transferInput) {
+          transferCost = transferPrice * 0
+        } else {
+          transferCost = transferPrice * +transferInput
+        }
+        
+        // min, max
+        if (service.price.min && service.price.min > storageCost + transferCost) {
+          cost = service.price.min
+        } else if (service.price.max && service.price.max < storageCost + transferCost) {
+          cost = service.price.max
+        } else {
+          cost = storageCost + transferCost
+        }
+    } else if ((service.price.storage.hdd !== service.price.storage.ssd) ||
+      (service.price.transfer.hdd !== service.price.transfer.ssd)) {
+        const storagePrice = service.price.storage[currentTarifOptions.hddSsd]
+        const transferPrice = service.price.transfer[currentTarifOptions.hddSsd]
+        
+        //bonus storage, free GB
+        if (service.price.storage.bonus && service.price.storage.bonus < +storageInput) {
+          storageCost = storagePrice * (+storageInput - service.price.storage.bonus)
+        }else if (service.price.storage.bonus && service.price.storage.bonus > +storageInput) {
+          storageCost = storagePrice * 0
+        } else {
+          storageCost = storagePrice * +storageInput
+        }
+        
+        //bonus transfer, free GB
+        if (service.price.transfer.bonus && service.price.transfer.bonus < +transferInput) {
+          transferCost = transferPrice * (+transferInput - service.price.transfer.bonus)
+        } else if (service.price.transfer.bonus && service.price.transfer.bonus > +transferInput) {
+          transferCost = transferPrice * 0
+        } else {
+          transferCost = transferPrice * +transferInput
+        }
+        
+        // min, max
+        if (service.price.min && service.price.min > storageCost + transferCost) {
+          cost = service.price.min
+        } else if (service.price.max && service.price.max < storageCost + transferCost) {
+          cost = service.price.max
+        } else {
+          cost = storageCost + transferCost
+        }
+    } else {
+      const storagePrice = service.price.storage.hdd
+      const transferPrice = service.price.transfer.hdd
+      
+      //bonus storage, free GB
+      if (service.price.storage.bonus && service.price.storage.bonus < +storageInput) {
+        storageCost = storagePrice * (+storageInput - service.price.storage.bonus)
+      }else if (service.price.storage.bonus && service.price.storage.bonus > +storageInput) {
+        storageCost = storagePrice * 0
+      } else {
+        storageCost = storagePrice * +storageInput
+      }
+      
+      //bonus transfer, free GB
+      if (service.price.transfer.bonus && service.price.transfer.bonus < +transferInput) {
+        transferCost = transferPrice * (+transferInput - service.price.transfer.bonus)
+      } else if (service.price.transfer.bonus && service.price.transfer.bonus > +transferInput) {
+        transferCost = transferPrice * 0
+      } else {
+        transferCost = transferPrice * +transferInput
+      }
 
-    
+      if (service.price.min && service.price.min > storageCost + transferCost) {
+        cost = service.price.min
+      } else if (service.price.max && service.price.max < storageCost + transferCost) {
+        cost = service.price.max
+      } else {
+        cost = storageCost + transferCost
+      }
+    }
 
 
-
-    const cost = service.price.storage.hdd * +storageInput;
-    
-    
-    
-    
     if (cost < minCoastService.cost) {
       setMinCoastService({ name: service.name, cost: cost })
     }
@@ -64,7 +153,7 @@ const App: React.FC = () => {
         />
         <ChartWrapper>
           <Charts minCoastServiceName={minCoastService.name} costData={costData} />
-          <CustomAxisIcons />
+          <CustomAxisIcons setMinCoastService={setMinCoastService} currentTarifOptions={currentTarifOptions} setCurrentTarifOptions={setCurrentTarifOptions} />
         </ChartWrapper>
       </MainWrapper>
     </>

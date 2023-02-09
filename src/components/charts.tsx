@@ -26,7 +26,9 @@ const Charts: React.FC<CostDataArray> = ({ costData, minCoastServiceName }) => {
   return(
     <ChartWrapper>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={costData}>
+        <BarChart data={costData} margin={{
+            top: 35,
+          }}>
           <XAxis tick={false} tickLine={false} />
           <Bar barSize={50} dataKey="cost" label={CustomBarLabel}>
             {costData.map((entry, index) => {

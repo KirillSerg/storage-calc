@@ -5,7 +5,31 @@ export const colors = {
   vultr: "skyblue",
 }
 
-export const services = [
+export interface Services {
+  id: number;
+  name: string;
+    icon: string;
+    price: {
+      min: null | number;
+      max: null | number;
+      storage: {
+        hdd: null | number;
+        ssd: null | number;
+        bonus: null | number;
+        multi: null | number;
+        singl: null | number;
+      },
+      transfer: {
+        hdd: null | number;
+        ssd: null | number;
+        bonus: null | number;
+        multi: null | number;
+        singl: null | number;
+      },
+    },
+}
+
+export const services: Services[] = [
   {
     id: 1,
     name: "backblaze",
@@ -16,26 +40,16 @@ export const services = [
       storage: {
         hdd: 0.005,
         ssd: 0.005,
-        multi: {
-          multiprice: 0.005,
-          bonus: null,
-        },
-        singl: {
-          singlprice: 0.005,
-          bonus: null,
-        },
+        bonus: null,
+        multi: 0.005,
+        singl:0.005,
       },
       transfer: {
         hdd: 0.01,
         ssd: 0.01,
-        multi: {
-          multiprice: 0.01,
-          bonus: null,
-        },
-        singl: {
-          singlprice: 0.01,
-          bonus: null,
-        },
+        bonus: null,
+        multi: 0.01,
+        singl: 0.01,
       },
     },
   },
@@ -49,26 +63,16 @@ export const services = [
       storage: {
         hdd: 0.01,
         ssd: 0.02,
-        multi: {
-          multiprice: null,
-          bonus: null,
-        },
-        singl: {
-          singlprice: null,
-          bonus: null,
-        },
+        bonus: null,
+        multi:null,
+        singl: null,
       },
       transfer: {
         hdd: 0.01,
         ssd: 0.01,
-        multi: {
-          multiprice: null,
-          bonus: null,
-        },
-        singl: {
-          singlprice: null,
-          bonus: null,
-        },
+        bonus: null,
+        multi: null,
+        singl: null,
       },
     },
   },
@@ -82,26 +86,16 @@ export const services = [
       storage: {
         hdd: null,
         ssd: null,
-        multi: {
-          multiprice: 0.06,
-          bonus: 75,
-        },
-        singl: {
-          singlprice: 0.03,
-          bonus: 75,
-        },
+        bonus: 75,
+        multi: 0.06,
+        singl: 0.03,
       },
       transfer: {
         hdd: null,
         ssd: null,
-        multi: {
-          multiprice: 0.02,
-          bonus: 75,
-        },
-        singl: {
-          singlprice: 0.02,
-          bonus: 75,
-        },
+        bonus: 75,
+        multi: 0.02,
+        singl: 0.02,
       },
     },
   },
@@ -115,26 +109,16 @@ export const services = [
       storage: {
         hdd: 0.01,
         ssd: 0.01,
-        multi: {
-          multiprice: 0.01,
-          bonus: null,
-        },
-        singl: {
-          singlprice: 0.01,
-          bonus: null
-        },
+        bonus: null,
+        multi: 0.01,
+        singl: 0.01,
       },
       transfer: {
         hdd: 0.01,
         ssd: 0.01,
-        multi: {
-          multiprice: 0.01,
-          bonus: null,
-        },
-        singl: {
-          singlprice: 0.01,
-          bonus: null,
-        },
+        bonus: null,
+        multi: 0.01,
+        singl: 0.01,
       },
     },
   },
