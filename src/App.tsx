@@ -12,12 +12,20 @@ const MainWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // gap: 30px;
+  gap: 20px;
+
+  @media(max-width: 760px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const ChartWrapper = styled.div`
   rotate: 90deg;
-  width: 350px;
+  width: 22rem;
+
+  @media(max-width: 760px) {
+    rotate: none;
+  }
 `;
 
 const App: React.FC = () => {

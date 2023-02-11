@@ -3,7 +3,7 @@ import { CostData } from "./Charts";
 import {services} from "./mockData";
 
 const XAxisWrap = styled.div`
-  width: 350px;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -17,9 +17,24 @@ const XAxisItemWrap = styled.div`
 
 const StyledImg = styled.img`
   rotate: -90deg;
+
+  @media(max-width: 760px) {
+    rotate: none;
+  }
 `;
 const StyledTickWrap = styled.div`
   rotate: -90deg;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  @media(max-width: 760px) {
+    rotate: none;
+  }
+
+  @media(max-width: 420px) {
+    rotate: -90deg;
+  }
 `;
 
 interface CustomAxisIconsProps {

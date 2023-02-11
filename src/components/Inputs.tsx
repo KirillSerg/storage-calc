@@ -5,6 +5,11 @@ const InputWrapper = styled.div`
   display: flex;
   gap:5rem;
   margin-top: 30px;
+
+  @media(max-width: 520px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
 `;
 
 const InputCategoryWrapper = styled.div`
