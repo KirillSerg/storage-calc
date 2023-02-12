@@ -6,7 +6,7 @@ import CustomBarLabel from './CustomBarLabel';
 import { colors } from './mockData';
 
 const ChartWrapper = styled.div`
-  height: 400px;
+  height: 50vh;
 `;
 
 export interface CostData {

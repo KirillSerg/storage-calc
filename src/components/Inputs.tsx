@@ -6,7 +6,7 @@ const InputWrapper = styled.div`
   gap:5rem;
   margin-top: 30px;
 
-  @media(max-width: 520px) {
+  @media(max-width: 560px) {
     flex-direction: column;
     gap: 2rem;
   }

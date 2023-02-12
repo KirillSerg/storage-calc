@@ -21,10 +21,11 @@ const MainWrapper = styled.div`
 
 const ChartWrapper = styled.div`
   rotate: 90deg;
-  width: 22rem;
+  width: 40vh;
 
   @media(max-width: 760px) {
     rotate: none;
+    width: 60vw;
   }
 `;
 

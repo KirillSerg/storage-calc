@@ -32,7 +32,7 @@ const StyledTickWrap = styled.div`
     rotate: none;
   }
 
-  @media(max-width: 420px) {
+  @media(max-width: 460px) {
     rotate: -90deg;
   }
 `;
